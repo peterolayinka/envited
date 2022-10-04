@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Home from "./component/Home";
+import Create from "./component/Create";
+import Events from "./component/Events";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import FormContext from './context'
 
 function App() {
+
+  const [form, setForm] = useState(null);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <FormContext.Provider value={{
+      form,
+      setForm
+    }}>
+    <Router>
+      <div>
+        {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/events" element={<Events />} />
+          <Route exact path="/create" element={<Create />} />
+        </Routes>
+      </div>
+    </Router>
+    </FormContext.Provider>
   );
 }
 
